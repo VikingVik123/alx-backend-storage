@@ -1,0 +1,8 @@
+-- Write a SQL script that creates a table users
+--
+CREATE TABLE IF NOT EXISTS users
+(   
+    id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOTNULL,
+    email VARCHAR(255) UNIQUE NOTNULL,
+    name VARCHAR(255) UNIQUE NOTNULL,
+);
