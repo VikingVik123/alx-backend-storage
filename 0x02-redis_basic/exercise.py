@@ -5,8 +5,24 @@ creation of Cache class
 import redis
 import uuid
 from typing import Union
+from functools import wraps
 
 
+def count_calls(method: Callable) -> Callable:
+    """
+    Decorator that counts how many times a method is called.
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """
+        Wrapper function that increments the call count
+        and then calls the original method.
+        """
+        key = method.__qualname__
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+    
+    return wrapper
 class Cache:
     def __init__(self, host='localhost', port=6379, db=0):
         """
